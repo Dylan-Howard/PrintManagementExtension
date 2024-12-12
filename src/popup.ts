@@ -10,6 +10,33 @@ async function getPrinters() {
   }
 }
 
+function reportPrint() {
+  chrome.printing.onJobStatusChanged.addListener((jobId, status) => {
+    console.log(`Detected print: ${jobId}: ${status}`);
+    // const cancelButton = document.getElementById("cancelButton");
+    // if (!cancelButton) {
+    //   return;
+    // }
+
+    // cancelButton.addEventListener('click', () => {
+    //   chrome.printing.cancelJob(jobId).then((response) => {
+    //     if (response !== undefined) {
+    //       console.log(response.status);
+    //     }
+    //     if (chrome.runtime.lastError !== undefined) {
+    //       console.log(chrome.runtime.lastError.message);
+    //     }
+    //   });
+    // });
+    // if (status !== "PENDING" && status !== "IN_PROGRESS") {
+    //   cancelButton.style.visibility = 'hidden';
+    // } else {
+    //   cancelButton.style.visibility = 'visible';
+    // }
+  });
+}
+
 void (async () => {
+  reportPrint();
   await getPrinters();
 })();
